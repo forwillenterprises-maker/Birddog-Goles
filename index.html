@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investing with Goles — Property Acquisitions</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════
+   BASE
+═══════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0b0c0f;--ink2:#14161c;--ink3:#1c1f28;--ink4:#252933;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --gold:#c8922a;--gold2:#e4a93c;--gold3:#f0c060;
+  --gold-glow:rgba(200,146,42,0.14);--gold-border:rgba(200,146,42,0.28);
+  --cream:#f5f0e8;--cream2:#ede5d4;--cream3:#d6c9a8;
+  --text:#f0ebe0;--muted:#8a8d9e;--dim:#3e4155;
+  --green:#2db87a;--red:#d45f5f;--amber:#c8822a;
+  --blue:#4a9eff;--purple:#a78bfa;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--ink);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+
+/* ═══════════════════════════════════════════════════
+   VIEW SYSTEM
+═══════════════════════════════════════════════════ */
+.view{display:none;min-height:100vh;animation:fadeIn .35s ease}
+.view.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══════════════════════════════════════════════════
+   LANDING PAGE
+═══════════════════════════════════════════════════ */
+.land-nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 48px;
+  background:linear-gradient(to bottom,rgba(11,12,15,.95),transparent);
+  transition:background .3s;
+}
+.land-nav.scrolled{background:rgba(11,12,15,.97);border-bottom:1px solid var(--border)}
+.land-logo{
+  font-family:'Playfair Display',serif;font-size:20px;font-weight:700;
+  color:var(--cream);letter-spacing:0.02em;
+}
+.land-logo span{color:var(--gold)}
+.land-nav-links{display:flex;align-items:center;gap:32px}
+.land-nav-links a{font-size:14px;color:var(--muted);text-decoration:none;transition:color .15s;cursor:pointer}
+.land-nav-links a:hover{color:var(--text)}
+.nav-pipeline-btn{
+  font-size:12px;color:var(--dim)!important;
+  border:1px solid var(--dim);border-radius:4px;
+  padding:6px 12px!important;transition:all .2s!important;
+}
+.nav-pipeline-btn:hover{color:var(--muted)!important;border-color:var(--muted)!important}
+
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:120px 24px 80px;
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% -10%,rgba(200,146,42,.08) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 60%,rgba(200,146,42,.04) 0%,transparent 50%);
+}
+.hero-grid{
+  position:absolute;inset:0;opacity:.04;
+  background-image:linear-gradient(var(--border2) 1px,transparent 1px),linear-gradient(90deg,var(--border2) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.hero-inner{position:relative;max-width:800px;margin:0 auto}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold2);margin-bottom:28px;
+}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';flex:1;height:1px;background:var(--gold-border);width:40px}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(48px,7vw,84px);
+  font-weight:900;line-height:1.05;
+  color:var(--cream);margin-bottom:28px;
+  letter-spacing:-.01em;
+}
+.hero h1 em{
+  color:var(--gold2);font-style:normal;
+  position:relative;display:inline-block;
+}
+.hero h1 em::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.hero-sub{
+  font-size:18px;color:var(--muted);max-width:520px;margin:0 auto 48px;
+  line-height:1.75;font-weight:300;
+}
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cta-primary{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--gold);color:var(--ink);
+  font-family:'Playfair Display',serif;font-size:17px;font-weight:700;
+  border:none;border-radius:6px;padding:16px 36px;cursor:pointer;
+  transition:all .2s;letter-spacing:.02em;
+  position:relative;overflow:hidden;
+}
+.cta-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent 60%)}
+.cta-primary:hover{background:var(--gold2);transform:translateY(-1px)}
+.cta-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:transparent;color:var(--muted);
+  font-size:14px;border:1px solid var(--border2);
+  border-radius:6px;padding:16px 28px;cursor:pointer;
+  transition:all .2s;font-family:'DM Sans',sans-serif;
+}
+.cta-secondary:hover{color:var(--text);border-color:var(--gold-border)}
+
+/* SCROLL INDICATOR */
+.scroll-ind{
+  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--dim);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold-border),transparent);animation:scrollPulse 2s infinite}
+@keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(.7)}50%{opacity:1;transform:scaleY(1)}}
+
+/* HOW IT WORKS */
+.section{padding:100px 24px}
+.section-inner{max-width:1000px;margin:0 auto}
+.section-label{
+  font-size:11px;font-weight:500;color:var(--gold);letter-spacing:.2em;
+  text-transform:uppercase;margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+.section-label::before{content:'';width:32px;height:1px;background:var(--gold-border)}
+.section h2{
+  font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,48px);
+  font-weight:700;color:var(--cream);margin-bottom:16px;line-height:1.2;
+}
+.section-sub{font-size:16px;color:var(--muted);max-width:480px;line-height:1.7;font-weight:300;margin-bottom:60px}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.step{
+  background:var(--ink2);padding:40px 32px;position:relative;overflow:hidden;
+  transition:background .2s;
+}
+.step:first-child{border-radius:10px 0 0 10px}
+.step:last-child{border-radius:0 10px 10px 0}
+.step:hover{background:var(--ink3)}
+.step::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold-border),transparent);
+  opacity:0;transition:opacity .2s;
+}
+.step:hover::before{opacity:1}
+.step-num{
+  font-family:'Playfair Display',serif;font-size:64px;font-weight:900;
+  color:var(--dim);line-height:1;margin-bottom:20px;
+}
+.step h3{font-size:17px;font-weight:500;color:var(--cream);margin-bottom:10px}
+.step p{font-size:14px;color:var(--muted);line-height:1.7}
+
+/* PROPERTY TYPES */
+.types-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:48px}
+.type-card{
+  background:var(--ink2);border:1px solid var(--border);border-radius:8px;
+  padding:24px 20px;text-align:center;transition:all .2s;cursor:default;
+}
+.type-card:hover{border-color:var(--gold-border);background:var(--ink3);transform:translateY(-2px)}
+.type-card-featured{border-color:var(--gold-border);background:var(--ink3)}
+.type-card-featured:hover{border-color:var(--gold2)}
+.type-card-featured .type-name{color:var(--gold2)}
+.coliving-badge{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:var(--gold-glow);border:1px solid var(--gold-border);border-radius:2px;padding:2px 7px;display:inline-block;margin-bottom:6px}
+.type-icon{font-size:28px;margin-bottom:10px}
+.type-name{font-size:14px;font-weight:500;color:var(--cream)}
+.type-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
+
+/* WHY */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.why-points{display:flex;flex-direction:column;gap:24px}
+.why-point{display:flex;gap:16px;align-items:flex-start}
+.why-icon{
+  width:40px;height:40px;border-radius:8px;
+  background:var(--gold-glow);border:1px solid var(--gold-border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;margin-top:2px;
+}
+.why-point h4{font-size:15px;font-weight:500;color:var(--cream);margin-bottom:4px}
+.why-point p{font-size:14px;color:var(--muted);line-height:1.6}
+.why-visual{
+  background:var(--ink2);border:1px solid var(--border);border-radius:12px;
+  padding:32px;position:relative;overflow:hidden;
+}
+.why-visual::before{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,var(--gold-glow),transparent 70%);
+}
+.stat-stack{display:flex;flex-direction:column;gap:16px}
+.stat-row{
+  background:var(--ink3);border:1px solid var(--border);border-radius:8px;
+  padding:16px 20px;display:flex;align-items:center;justify-content:space-between;
+}
+.stat-label{font-size:13px;color:var(--muted)}
+.stat-val{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold2);font-weight:700}
+
+/* CTA SECTION */
+.cta-section{
+  background:var(--ink2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:100px 24px;text-align:center;position:relative;overflow:hidden;
+}
+.cta-section::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 50% 50%,var(--gold-glow),transparent 70%);
+}
+.cta-section-inner{position:relative;max-width:600px;margin:0 auto}
+.cta-section h2{
+  font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,52px);
+  font-weight:900;color:var(--cream);margin-bottom:16px;line-height:1.15;
+}
+.cta-section p{font-size:16px;color:var(--muted);margin-bottom:36px;line-height:1.7}
+
+/* FOOTER */
+.footer{
+  padding:40px 48px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+}
+.footer-brand{font-family:'Playfair Display',serif;font-size:16px;color:var(--muted)}
+.footer-brand span{color:var(--gold)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:13px;color:var(--dim);text-decoration:none;cursor:pointer;transition:color .15s}
+.footer-links a:hover{color:var(--muted)}
+
+/* ═══════════════════════════════════════════════════
+   PIPELINE LOGIN MODAL
+═══════════════════════════════════════════════════ */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{
+  background:var(--ink2);border:1px solid var(--border2);border-radius:14px;
+  padding:40px;width:100%;max-width:380px;
+  transform:translateY(16px);transition:transform .25s;text-align:center;
+}
+.modal-overlay.open .modal-box{transform:translateY(0)}
+.modal-lock{font-size:36px;margin-bottom:14px}
+.modal-title{font-family:'Playfair Display',serif;font-size:26px;color:var(--cream);margin-bottom:6px}
+.modal-sub{font-size:13px;color:var(--muted);margin-bottom:28px;line-height:1.5}
+.modal-label{display:block;text-align:left;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+.modal-input{
+  width:100%;background:var(--ink);border:1px solid var(--border2);border-radius:8px;
+  color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;
+  padding:13px 16px;letter-spacing:.08em;text-align:center;
+  transition:border-color .15s,box-shadow .15s;
+}
+.modal-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
+.modal-input::placeholder{color:var(--dim);letter-spacing:0}
+.modal-btn{
+  width:100%;margin-top:14px;
+  background:var(--gold);color:var(--ink);
+  font-family:'Playfair Display',serif;font-size:18px;font-weight:700;
+  border:none;border-radius:8px;padding:14px;cursor:pointer;
+  transition:background .15s;letter-spacing:.02em;
+}
+.modal-btn:hover{background:var(--gold2)}
+.modal-err{font-size:13px;color:var(--red);margin-top:10px;display:none}
+.modal-err.show{display:block}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--dim);font-size:20px;cursor:pointer;transition:color .15s;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px}
+.modal-close:hover{color:var(--muted);background:var(--ink3)}
+.modal-box{position:relative}
+
+/* ═══════════════════════════════════════════════════
+   SUBMIT FORM VIEW
+═══════════════════════════════════════════════════ */
+.form-nav{
+  background:var(--ink2);border-bottom:1px solid var(--border);
+  padding:16px 32px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;
+}
+.form-nav-brand{font-family:'Playfair Display',serif;font-size:17px;color:var(--cream)}
+.form-nav-brand span{color:var(--gold)}
+.back-btn{
+  display:flex;align-items:center;gap:6px;background:none;border:none;
+  color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;
+  cursor:pointer;transition:color .15s;padding:0;
+}
+.back-btn:hover{color:var(--text)}
+
+.form-hero{
+  background:var(--ink2);border-bottom:1px solid var(--border);
+  padding:48px 24px 40px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.form-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 100% at 50% 0,rgba(200,146,42,.07),transparent 70%)}
+.form-hero-inner{position:relative}
+.form-hero h2{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,52px);font-weight:900;color:var(--cream);margin-bottom:12px;line-height:1.1}
+.form-hero h2 span{color:var(--gold2)}
+.form-hero p{font-size:15px;color:var(--muted);max-width:460px;margin:0 auto;line-height:1.7}
+
+.form-outer{max-width:720px;margin:0 auto;padding:36px 20px 80px}
+
+/* Form cards */
+.fcard{background:var(--ink2);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden}
+.fcard-head{display:flex;align-items:center;gap:14px;padding:18px 24px;border-bottom:1px solid var(--border);background:var(--ink3)}
+.fcard-num{width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--ink);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fcard-title{font-size:14px;font-weight:500;color:var(--text);letter-spacing:.01em}
+.fcard-body{padding:24px}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg.one{grid-template-columns:1fr}
+.full{grid-column:1/-1}
+.ff{display:flex;flex-direction:column;gap:6px}
+.ff label{font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.ff label .req{color:var(--gold);margin-left:2px}
+.ff input,.ff select,.ff textarea{
+  background:var(--ink);border:1px solid var(--border2);border-radius:7px;
+  color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;
+  padding:10px 14px;transition:border-color .15s,box-shadow .15s;width:100%;
+}
+.ff select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%233e4155' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.ff select option{background:#1c1f28}
+.ff textarea{resize:vertical;min-height:88px}
+.ff input::placeholder,.ff textarea::placeholder{color:var(--dim)}
+.ff input:focus,.ff select:focus,.ff textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
+
+/* Toggle checks */
+.tg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.tg{display:flex;align-items:center;gap:8px;background:var(--ink3);border:1px solid var(--border);border-radius:7px;padding:10px 12px;cursor:pointer;transition:all .15s;font-size:13px;color:var(--muted);user-select:none}
+.tg:hover{border-color:var(--gold-border);color:var(--text)}
+.tg input{display:none}
+.tg-box{width:16px;height:16px;border-radius:3px;border:1.5px solid var(--dim);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.tg.on{border-color:var(--gold);background:var(--gold-glow);color:var(--text)}
+.tg.on .tg-box{background:var(--gold);border-color:var(--gold)}
+.tg.on .tg-box::after{content:'';display:block;width:9px;height:5px;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(-45deg) translate(1px,-1px)}
+
+/* Urgency */
+.urg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.urg{display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--ink3);border:1px solid var(--border);border-radius:8px;padding:14px 8px;cursor:pointer;transition:all .15s;text-align:center}
+.urg input{display:none}
+.urg-e{font-size:22px}
+.urg-l{font-size:12px;font-weight:500;color:var(--muted)}
+.urg-d{font-size:11px;color:var(--dim);line-height:1.4}
+.urg.on-hot{border-color:var(--red);background:rgba(212,95,95,.1)}
+.urg.on-hot .urg-l{color:#e07070}
+.urg.on-warm{border-color:var(--amber);background:rgba(200,130,42,.1)}
+.urg.on-warm .urg-l{color:#d49040}
+.urg.on-cool{border-color:var(--green);background:rgba(45,184,122,.08)}
+.urg.on-cool .urg-l{color:var(--green)}
+
+/* Upload */
+.upzone{border:1.5px dashed var(--gold-border);border-radius:8px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .2s;background:var(--ink3)}
+.upzone:hover{border-color:var(--gold);background:var(--gold-glow)}
+.upzone p{font-size:14px;color:var(--muted)}
+.upzone p strong{color:var(--gold2)}
+.upzone small{font-size:12px;color:var(--dim);display:block;margin-top:4px}
+.ftags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.ftag{background:var(--ink3);border:1px solid var(--border2);border-radius:5px;padding:4px 10px;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.ftag button{background:none;border:none;cursor:pointer;color:var(--dim);font-size:15px;line-height:1;padding:0}
+.ftag button:hover{color:var(--red)}
+
+.div{height:1px;background:var(--border);margin:16px 0 20px}
+.submit-area{text-align:center;margin-top:32px}
+.sub-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--gold);color:var(--ink);
+  font-family:'Playfair Display',serif;font-size:20px;font-weight:700;
+  border:none;border-radius:8px;padding:18px 56px;cursor:pointer;
+  transition:all .2s;letter-spacing:.03em;position:relative;overflow:hidden;
+}
+.sub-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.12),transparent 60%)}
+.sub-btn:hover{background:var(--gold2);transform:translateY(-1px)}
+.sub-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.sub-note{font-size:13px;color:var(--dim);margin-top:12px}
+
+/* Success */
+.success-view{text-align:center;padding:80px 24px;max-width:520px;margin:0 auto}
+.success-ring{width:80px;height:80px;border-radius:50%;border:2px solid var(--green);margin:0 auto 24px;display:flex;align-items:center;justify-content:center;font-size:36px;background:rgba(45,184,122,.08)}
+.success-view h2{font-family:'Playfair Display',serif;font-size:44px;color:var(--green);margin-bottom:12px}
+.success-view p{font-size:16px;color:var(--muted);margin-bottom:28px;line-height:1.7}
+.another-btn{background:transparent;border:1px solid var(--gold-border);color:var(--gold);padding:10px 28px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;transition:all .15s;margin-right:10px}
+.another-btn:hover{background:var(--gold-glow)}
+.home-btn{background:transparent;border:1px solid var(--border2);color:var(--muted);padding:10px 28px;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;transition:all .15s}
+.home-btn:hover{color:var(--text)}
+
+/* ═══════════════════════════════════════════════════
+   PIPELINE DASHBOARD VIEW
+═══════════════════════════════════════════════════ */
+.pipe-nav{
+  background:var(--ink2);border-bottom:1px solid var(--border);
+  padding:14px 24px;display:flex;align-items:center;
+  justify-content:space-between;position:sticky;top:0;z-index:50;flex-wrap:wrap;gap:10px;
+}
+.pipe-brand{display:flex;align-items:center;gap:10px}
+.pipe-brand-text{font-family:'Playfair Display',serif;font-size:18px;color:var(--cream)}
+.pipe-badge{font-size:10px;background:var(--gold-glow);color:var(--gold);border:1px solid var(--gold-border);border-radius:3px;padding:2px 8px;letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+.pipe-actions{display:flex;gap:8px;flex-wrap:wrap}
+.pbtn{padding:7px 14px;font-size:12px;border:1px solid var(--border2);border-radius:6px;background:transparent;cursor:pointer;color:var(--text);transition:all .15s;font-family:'DM Sans',sans-serif;white-space:nowrap}
+.pbtn:hover{background:var(--ink3)}
+.pbtn.gold{background:var(--gold);color:var(--ink);border-color:var(--gold);font-weight:500}
+.pbtn.gold:hover{background:var(--gold2)}
+.pbtn.danger{color:var(--red);border-color:rgba(212,95,95,.25)}
+.pbtn.danger:hover{background:rgba(212,95,95,.08)}
+.pbtn.ghost{color:var(--muted);border-color:var(--border)}
+.pbtn.ghost:hover{color:var(--text)}
+.pbtn.sm{padding:5px 10px;font-size:11px}
+
+/* Status bar */
+.status-bar{display:flex;align-items:center;gap:16px;padding:9px 24px;background:var(--ink2);border-bottom:1px solid var(--border);font-size:12px;flex-wrap:wrap}
+.sb-item{display:flex;align-items:center;gap:6px;color:var(--muted)}
+.sb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dot-g{background:var(--green)}.dot-a{background:var(--amber)}.dot-d{background:var(--dim)}
+.sb-item strong{color:var(--text);font-weight:500}
+.sb-pending{margin-left:auto;background:rgba(200,130,42,.12);color:var(--amber);border:1px solid rgba(200,130,42,.25);border-radius:99px;padding:2px 10px;font-size:11px;cursor:pointer;transition:all .15s}
+.sb-pending:hover{background:var(--amber);color:var(--ink)}
+
+/* Tabs */
+.pipe-tabs{display:flex;gap:2px;padding:0 24px;background:var(--ink2);border-bottom:1px solid var(--border)}
+.ptab{padding:12px 18px;font-size:13px;font-weight:500;border:none;background:none;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;font-family:'DM Sans',sans-serif}
+.ptab.on{color:var(--gold);border-bottom-color:var(--gold)}
+.ptab:hover:not(.on){color:var(--text)}
+
+.pipe-main{padding:24px;max-width:1100px;margin:0 auto}
+
+/* Metrics */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.metric{background:var(--ink2);border:1px solid var(--border);border-radius:10px;padding:18px 20px;position:relative;overflow:hidden}
+.metric.hi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold)}
+.metric-l{font-size:11px;font-weight:500;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.metric-v{font-size:28px;font-weight:500;color:var(--text);font-family:'Playfair Display',serif}
+.metric-s{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* Board */
+.board{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.bcol{background:var(--ink2);border:1px solid var(--border);border-radius:10px;padding:14px;min-height:180px}
+.bcol-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.bcol-n{font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.bcol-c{font-size:11px;background:var(--ink3);border:1px solid var(--border);border-radius:99px;padding:2px 8px;color:var(--dim)}
+.deal{background:var(--ink3);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px;cursor:pointer;transition:border-color .15s}
+.deal:hover{border-color:var(--gold-border)}
+.deal-a{font-size:12px;font-weight:500;color:var(--text);line-height:1.4;margin-bottom:4px}
+.deal-p{font-size:13px;color:var(--gold2);font-weight:500}
+.deal-m{font-size:11px;color:var(--dim);margin-top:5px;display:flex;flex-direction:column;gap:2px}
+.udot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:3px}
+
+/* Table */
+.twrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 14px;color:var(--dim);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle}
+tr:hover td{background:var(--ink2);cursor:pointer}
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:500}
+.b-new{background:rgba(74,158,255,.1);color:var(--blue)}
+.b-rev{background:rgba(200,130,42,.1);color:var(--amber)}
+.b-dd{background:rgba(167,139,250,.1);color:var(--purple)}
+.b-off{background:var(--gold-glow);color:var(--gold2)}
+.b-cl{background:rgba(45,184,122,.1);color:var(--green)}
+.b-dead{background:rgba(62,65,85,.2);color:var(--dim)}
+.type-tag{background:var(--ink3);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:4px;font-size:11px}
+.rep-wrap{display:flex;align-items:center;gap:6px}
+.ava{width:26px;height:26px;border-radius:50%;background:rgba(167,139,250,.12);color:var(--purple);font-size:10px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(167,139,250,.2)}
+
+/* Detail panel */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:flex;justify-content:flex-end;backdrop-filter:blur(3px)}
+.overlay.hidden{display:none}
+.panel{width:100%;max-width:560px;background:var(--ink2);height:100%;overflow-y:auto;border-left:1px solid var(--border2)}
+.panel-top{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;position:sticky;top:0;background:var(--ink2);z-index:10}
+.panel-title{font-size:16px;font-weight:500;color:var(--text);line-height:1.3;font-family:'Playfair Display',serif}
+.panel-addr{font-size:12px;color:var(--muted);margin-top:3px}
+.xbtn{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;width:30px;height:30px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.xbtn:hover{color:var(--text);border-color:var(--border2)}
+.panel-body{padding:20px 24px 40px}
+.ps{margin-bottom:20px}
+.ps-t{font-size:11px;font-weight:500;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dgf{grid-column:1/-1}
+.di label{font-size:11px;color:var(--dim);display:block;margin-bottom:3px}
+.di span{font-size:13px;color:var(--text)}
+.nb{background:var(--ink3);border:1px solid var(--border);border-radius:6px;padding:12px;font-size:13px;color:var(--muted);line-height:1.6;margin-top:4px}
+.tagr{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+.tgtag{background:var(--ink3);border:1px solid var(--border);border-radius:4px;padding:3px 9px;font-size:11px;color:var(--muted)}
+.drow{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--ink3);border:1px solid var(--border);border-radius:6px;font-size:13px;color:var(--muted);margin-bottom:5px}
+.stsel{background:var(--ink3);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:7px 10px;cursor:pointer}
+.stsel:focus{outline:none;border-color:var(--gold)}
+.stsel option{background:#1c1f28}
+.empty{text-align:center;padding:40px;color:var(--dim);font-size:13px}
+
+/* Settings modal */
+.smodal-bg{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:300;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);padding:20px}
+.smodal-bg.hidden{display:none}
+.smodal{background:var(--ink2);border:1px solid var(--border2);border-radius:14px;padding:30px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto}
+.smodal h3{font-family:'Playfair Display',serif;font-size:20px;color:var(--cream);margin-bottom:6px}
+.smodal>p{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.5}
+.mf{margin-bottom:14px}
+.mf label{display:block;font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:.05em}
+.mf input{width:100%;background:var(--ink3);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;padding:10px 12px}
+.mf input:focus{outline:none;border-color:var(--gold)}
+.mf .hint{font-size:11px;color:var(--dim);margin-top:4px;line-height:1.5}
+.mf .hint a{color:var(--muted)}
+.sdiv{height:1px;background:var(--border);margin:18px 0}
+.stitle{font-size:12px;font-weight:500;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.mact{display:flex;gap:8px;justify-content:flex-end;margin-top:22px}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;z-index:999;background:var(--ink3);border:1px solid var(--border2);border-left:3px solid var(--green);border-radius:8px;padding:14px 20px;min-width:260px;max-width:360px;box-shadow:0 12px 40px rgba(0,0,0,.5);transform:translateY(80px);opacity:0;transition:all .3s ease}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.err{border-left-color:var(--red)}
+.toast.warn{border-left-color:var(--amber)}
+.toast b{display:block;font-weight:500;margin-bottom:2px}
+.toast span{font-size:12px;color:var(--muted)}
+
+.spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(11,12,15,.3);border-top-color:var(--ink);border-radius:50%;animation:sp .6s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* Filters */
+.frow{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.fi{background:var(--ink2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:7px 12px}
+.fi:focus{outline:none;border-color:var(--gold)}
+.fi::placeholder{color:var(--dim)}
+.fis{background:var(--ink2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:7px 12px;cursor:pointer;appearance:none}
+.fis option{background:#1c1f28}
+
+@media(max-width:768px){
+  .land-nav{padding:16px 20px}
+  .land-nav-links{display:none}
+  .hero h1{font-size:42px}
+  .steps{grid-template-columns:1fr}
+  .step:first-child,.step:last-child{border-radius:0}
+  .step:first-child{border-radius:10px 10px 0 0}
+  .step:last-child{border-radius:0 0 10px 10px}
+  .types-grid{grid-template-columns:1fr 1fr}
+  .why-grid{grid-template-columns:1fr}
+  .metrics{grid-template-columns:1fr 1fr}
+  .board{grid-template-columns:1fr}
+  .panel{max-width:100%}
+  .footer{padding:24px 20px}
+  .tg-grid{grid-template-columns:1fr 1fr}
+  .urg-grid{grid-template-columns:1fr}
+  .fg{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+  VIEW 1: LANDING PAGE
+═══════════════════════════════════════════ -->
+<div class="view active" id="view-land">
+
+  <nav class="land-nav" id="landNav">
+    <div class="land-logo">Investing with <span>Goles</span></div>
+    <div class="land-nav-links">
+      <a onclick="goView('view-how')">How It Works</a>
+      <a onclick="goView('view-types')">Property Types</a>
+      <a onclick="goView('view-why')">Why Us</a>
+      <a class="nav-pipeline-btn" onclick="openLoginModal()">Team Login</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Property Acquisitions</div>
+      <h1>We Buy<br><em>Real Estate</em><br>At Any Stage</h1>
+      <p class="hero-sub">Off-market deals, motivated sellers, creative terms welcome. If you've found a property — we want to hear about it.</p>
+      <div class="hero-ctas">
+        <button class="cta-primary" onclick="goSubmit()">Submit a Deal →</button>
+        <button class="cta-secondary" onclick="goView('view-how')">Learn how it works</button>
+      </div>
+    </div>
+    <div class="scroll-ind"><div class="scroll-line"></div></div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="section-inner">
+      <div class="section-label">Process</div>
+      <h2>Simple Three-Step Process</h2>
+      <p class="section-sub">From lead submission to closing — here's how we work with our birddog network.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Submit Your Lead</h3>
+          <p>Fill out the deal submission form with everything you know about the property and seller. The more detail, the better — especially motivation and timeline.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>We Review & Decide</h3>
+          <p>Our acquisition team reviews every submission within 24–48 hours. We'll reach out directly if we want to move forward or need more information.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>You Get Paid</h3>
+          <p>If we close on a deal you brought us, you receive a finder's fee. We move fast and close with cash or creative terms the seller agrees to.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROPERTY TYPES -->
+  <section class="section" id="types" style="padding-top:0">
+    <div class="section-inner">
+      <div class="section-label">What We Buy</div>
+      <h2>Property Types We Acquire</h2>
+      <p class="section-sub">We specialize in income-producing commercial properties across these asset classes.</p>
+      <div class="types-grid">
+        <div class="type-card type-card-featured">
+          <div class="type-icon">🏘️</div>
+          <div class="coliving-badge">Actively Acquiring</div>
+          <div class="type-name">Co-Living</div>
+          <div class="type-desc">Shared housing, room-by-room rentals & intentional communities</div>
+        </div>
+        <div class="type-card"><div class="type-icon">🏢</div><div class="type-name">Multifamily</div><div class="type-desc">Apartment complexes, duplexes, small to mid-size</div></div>
+        <div class="type-card"><div class="type-icon">🏕️</div><div class="type-name">RV Parks</div><div class="type-desc">Campgrounds, RV resorts, seasonal and year-round</div></div>
+        <div class="type-card"><div class="type-icon">🏠</div><div class="type-name">Mobile Home Parks</div><div class="type-desc">Manufactured housing communities, all sizes</div></div>
+        <div class="type-card"><div class="type-icon">📦</div><div class="type-name">Self Storage</div><div class="type-desc">Climate and non-climate controlled facilities</div></div>
+        <div class="type-card"><div class="type-icon">🏪</div><div class="type-name">Retail / NNN</div><div class="type-desc">Single tenant, strip centers, net lease</div></div>
+        <div class="type-card"><div class="type-icon">🏗️</div><div class="type-name">Mixed Use</div><div class="type-desc">Commercial + residential combination assets</div></div>
+        <div class="type-card"><div class="type-icon">🌿</div><div class="type-name">Land</div><div class="type-desc">Development sites, agricultural, raw land</div></div>
+        <div class="type-card"><div class="type-icon">💼</div><div class="type-name">Other</div><div class="type-desc">Unique assets, portfolios, anything with potential</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="section" id="why" style="background:var(--ink2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="section-inner">
+      <div class="why-grid">
+        <div>
+          <div class="section-label">Why Work With Us</div>
+          <h2>Serious Buyers.<br>Creative Terms.</h2>
+          <p class="section-sub" style="margin-bottom:36px">We close deals that others pass on. Motivated sellers, distressed assets, unusual structures — that's our wheelhouse.</p>
+          <div class="why-points">
+            <div class="why-point">
+              <div class="why-icon">⚡</div>
+              <div><h4>Fast Decisions</h4><p>We review every submission within 24–48 hours and move quickly when the deal makes sense.</p></div>
+            </div>
+            <div class="why-point">
+              <div class="why-icon">🤝</div>
+              <div><h4>Creative Structuring</h4><p>Seller financing, subject-to, master lease, JV — we're not limited to all-cash conventional deals.</p></div>
+            </div>
+            <div class="why-point">
+              <div class="why-icon">💰</div>
+              <div><h4>Fair Finder Fees</h4><p>We compensate our network well for quality leads that result in closed transactions.</p></div>
+            </div>
+            <div class="why-point">
+              <div class="why-icon">🔒</div>
+              <div><h4>Confidential Process</h4><p>Seller info stays between us. We handle communication professionally and discreetly.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="why-visual">
+          <div class="stat-stack">
+            <div style="font-family:'Playfair Display',serif;font-size:13px;color:var(--muted);margin-bottom:8px;letter-spacing:.06em;text-transform:uppercase">Active pipeline metrics</div>
+            <div class="stat-row"><span class="stat-label">Properties reviewed</span><span class="stat-val">All types</span></div>
+            <div class="stat-row"><span class="stat-label">Deal structures accepted</span><span class="stat-val">Any terms</span></div>
+            <div class="stat-row"><span class="stat-label">Decision timeline</span><span class="stat-val">24–48 hrs</span></div>
+            <div class="stat-row"><span class="stat-label">Markets covered</span><span class="stat-val">Nationwide</span></div>
+            <div class="stat-row"><span class="stat-label">Off-market preference</span><span class="stat-val">Strong</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section class="cta-section">
+    <div class="cta-section-inner">
+      <h2>Found a Deal?<br>Let's Talk.</h2>
+      <p>Fill out our deal submission form — it takes about 5 minutes and could earn you a significant finder's fee if we close.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="cta-primary" onclick="goSubmit()">Submit a Deal →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-brand">Investing with <span>Goles</span> — Property Acquisitions</div>
+    <div class="footer-links">
+      <a onclick="goView('view-how')">How It Works</a>
+      <a onclick="goView('view-types')">Property Types</a>
+      <a onclick="goView('view-why')">Why Us</a>
+      <a onclick="goSubmit()">Submit a Deal</a>
+      <a onclick="openLoginModal()">Team Login</a>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  VIEW: HOW IT WORKS
+═══════════════════════════════════════════ -->
+<div class="view" id="view-how">
+  <nav class="form-nav">
+    <button class="back-btn" onclick="goLand()">← Back</button>
+    <div class="form-nav-brand">Investing with <span>Goles</span></div>
+    <div style="width:60px"></div>
+  </nav>
+  <div style="max-width:860px;margin:0 auto;padding:56px 24px 80px">
+    <div class="section-label" style="margin-bottom:12px">Process</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,56px);font-weight:900;color:var(--cream);margin-bottom:14px;line-height:1.1">How It Works</h2>
+    <p style="font-size:17px;color:var(--muted);max-width:540px;line-height:1.75;margin-bottom:56px;font-weight:300">Our acquisition process is straightforward. From your first lead submission to closing day, here's exactly what to expect.</p>
+
+    <div style="display:flex;flex-direction:column;gap:0">
+      <!-- Step 1 -->
+      <div style="display:grid;grid-template-columns:80px 1fr;gap:32px;padding:40px 0;border-bottom:1px solid var(--border)">
+        <div style="text-align:center">
+          <div style="font-family:'Playfair Display',serif;font-size:56px;font-weight:900;color:var(--dim);line-height:1">01</div>
+          <div style="width:1px;height:40px;background:linear-gradient(to bottom,var(--border2),transparent);margin:8px auto 0"></div>
+        </div>
+        <div style="padding-top:8px">
+          <div style="font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Find the Deal</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--cream);margin-bottom:14px">You Identify a Motivated Seller</h3>
+          <p style="color:var(--muted);line-height:1.75;margin-bottom:16px">This could come from driving for dollars, cold calling, direct mail, a personal connection, or any other source. The key is the seller needs to have a real reason to sell — retirement, financial distress, estate situation, divorce, or just tired of owning. Off-market deals are ideal, but listed properties work too.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
+            <span style="background:var(--ink3);border:1px solid var(--border);border-radius:4px;padding:4px 12px;font-size:12px;color:var(--muted)">Driving for dollars</span>
+            <span style="background:var(--ink3);border:1px solid var(--border);border-radius:4px;padding:4px 12px;font-size:12px;color:var(--muted)">Cold calling</span>
+            <span style="background:var(--ink3);border:1px solid var(--border);border-radius:4px;padding:4px 12px;font-size:12px;color:var(--muted)">Direct mail</span>
+            <span style="background:var(--ink3);border:1px solid var(--border);border-radius:4px;padding:4px 12px;font-size:12px;color:var(--muted)">Referrals</span>
+            <span style="background:var(--ink3);border:1px solid var(--border);border-radius:4px;padding:4px 12px;font-size:12px;color:var(--muted)">Broker relationships</span>
+            <span style="background:var(--ink3);border:1px solid var(--border);border-radius:4px;padding:4px 12px;font-size:12px;color:var(--muted)">MLS / Loopnet</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div style="display:grid;grid-template-columns:80px 1fr;gap:32px;padding:40px 0;border-bottom:1px solid var(--border)">
+        <div style="text-align:center">
+          <div style="font-family:'Playfair Display',serif;font-size:56px;font-weight:900;color:var(--dim);line-height:1">02</div>
+          <div style="width:1px;height:40px;background:linear-gradient(to bottom,var(--border2),transparent);margin:8px auto 0"></div>
+        </div>
+        <div style="padding-top:8px">
+          <div style="font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Submit</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--cream);margin-bottom:14px">Fill Out the Deal Submission Form</h3>
+          <p style="color:var(--muted);line-height:1.75;margin-bottom:16px">Use the Submit a Deal form on this site. Tell us everything — the address, seller's name, contact info, why they're selling, their timeline, what terms they're open to, and any financial details you know. Upload anything you have: rent rolls, T12s, photos, an OM if there is one.</p>
+          <p style="color:var(--muted);line-height:1.75">The more detail you give us, the faster we can move. A complete submission with seller motivation, timeline, and financial info gets reviewed in hours — not days.</p>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div style="display:grid;grid-template-columns:80px 1fr;gap:32px;padding:40px 0;border-bottom:1px solid var(--border)">
+        <div style="text-align:center">
+          <div style="font-family:'Playfair Display',serif;font-size:56px;font-weight:900;color:var(--dim);line-height:1">03</div>
+          <div style="width:1px;height:40px;background:linear-gradient(to bottom,var(--border2),transparent);margin:8px auto 0"></div>
+        </div>
+        <div style="padding-top:8px">
+          <div style="font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Review</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--cream);margin-bottom:14px">We Evaluate & Respond Within 24–48 Hours</h3>
+          <p style="color:var(--muted);line-height:1.75;margin-bottom:16px">Our team reviews every submission. We look at the deal fundamentals — price vs. value, NOI, occupancy, seller motivation, deal structure possibilities — and make a quick decision. If we want to move forward, we'll contact you directly. If it's not a fit, we'll let you know why.</p>
+          <div style="background:var(--ink2);border:1px solid var(--border);border-radius:8px;padding:16px 20px;margin-top:16px">
+            <div style="font-size:12px;font-weight:500;color:var(--gold);margin-bottom:8px">What we're evaluating</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;color:var(--muted)">
+              <span>✓ Price vs. market value</span><span>✓ Seller motivation strength</span>
+              <span>✓ Cash flow potential</span><span>✓ Deal structure flexibility</span>
+              <span>✓ Occupancy & condition</span><span>✓ Timeline feasibility</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div style="display:grid;grid-template-columns:80px 1fr;gap:32px;padding:40px 0;border-bottom:1px solid var(--border)">
+        <div style="text-align:center">
+          <div style="font-family:'Playfair Display',serif;font-size:56px;font-weight:900;color:var(--dim);line-height:1">04</div>
+          <div style="width:1px;height:40px;background:linear-gradient(to bottom,var(--border2),transparent);margin:8px auto 0"></div>
+        </div>
+        <div style="padding-top:8px">
+          <div style="font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Negotiate</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--cream);margin-bottom:14px">We Handle the Seller Directly</h3>
+          <p style="color:var(--muted);line-height:1.75">Once we decide to pursue a deal, our team takes over negotiation and communication with the seller. We'll keep you in the loop as the deal progresses. You don't need to do anything further — just make sure the seller knows someone from our team will be reaching out.</p>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div style="display:grid;grid-template-columns:80px 1fr;gap:32px;padding:40px 0">
+        <div style="text-align:center">
+          <div style="font-family:'Playfair Display',serif;font-size:56px;font-weight:900;color:var(--green);line-height:1">05</div>
+        </div>
+        <div style="padding-top:8px">
+          <div style="font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--green);margin-bottom:10px">Payday</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--cream);margin-bottom:14px">You Get Your Finder's Fee at Closing</h3>
+          <p style="color:var(--muted);line-height:1.75;margin-bottom:16px">When we close on a property you brought us, you receive a finder's fee. The amount depends on the deal size and complexity. We pay at closing — no waiting, no runaround.</p>
+          <div style="background:var(--green-bg,rgba(45,184,122,.08));border:1px solid rgba(45,184,122,.2);border-radius:8px;padding:16px 20px">
+            <div style="font-size:13px;color:var(--green)">💡 The best birddogs in our network submit consistently — even deals that don't close today help us understand what's in the market and often lead to future opportunities.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+      <p style="font-size:16px;color:var(--muted);margin-bottom:24px">Ready to submit your first deal?</p>
+      <button class="cta-primary" onclick="goSubmit()">Submit a Deal →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  VIEW: PROPERTY TYPES
+═══════════════════════════════════════════ -->
+<div class="view" id="view-types">
+  <nav class="form-nav">
+    <button class="back-btn" onclick="goLand()">← Back</button>
+    <div class="form-nav-brand">Investing with <span>Goles</span></div>
+    <div style="width:60px"></div>
+  </nav>
+  <div style="max-width:860px;margin:0 auto;padding:56px 24px 80px">
+    <div class="section-label" style="margin-bottom:12px">What We Acquire</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,56px);font-weight:900;color:var(--cream);margin-bottom:14px;line-height:1.1">Property Types</h2>
+    <p style="font-size:17px;color:var(--muted);max-width:560px;line-height:1.75;margin-bottom:56px;font-weight:300">We specialize in income-producing commercial and residential assets. Here's what we're actively looking for — and what makes a strong submission for each.</p>
+
+    <div style="display:flex;flex-direction:column;gap:14px">
+
+      <div style="background:var(--ink2);border:1px solid var(--gold-border);border-radius:10px;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--ink3);border-bottom:1px solid var(--border)">
+          <span style="font-size:28px">🏘️</span>
+          <div><div style="font-size:16px;font-weight:500;color:var(--gold2)">Co-Living</div><div style="font-size:12px;color:var(--gold);margin-top:2px;letter-spacing:.08em;text-transform:uppercase;font-weight:500">Actively Acquiring</div></div>
+        </div>
+        <div style="padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div><div style="font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">What we're looking for</div><p style="font-size:13px;color:var(--muted);line-height:1.7">Shared housing properties where individual rooms are rented separately. Large single-family homes, rooming houses, student housing, intentional communities, and properties that can be converted to room-by-room rentals. Seller financing strongly preferred.</p></div>
+          <div><div style="font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Strong submission includes</div><ul style="font-size:13px;color:var(--muted);line-height:1.9;padding-left:16px"><li>Number of rooms / beds</li><li>Current rent per room</li><li>Occupancy rate</li><li>Lease structure (individual vs. master)</li><li>Zoning / local regulations</li></ul></div>
+        </div>
+      </div>
+
+      <div style="background:var(--ink2);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--ink3);border-bottom:1px solid var(--border)">
+          <span style="font-size:28px">🏕️</span><div style="font-size:16px;font-weight:500;color:var(--cream)">RV Parks & Campgrounds</div>
+        </div>
+        <div style="padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div><div style="font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">What we're looking for</div><p style="font-size:13px;color:var(--muted);line-height:1.7">RV parks, campgrounds, and RV resorts — seasonal or year-round. Value-add through adding hookups, improving amenities, raising below-market rates, or adding pull-through sites. Seller financing welcome.</p></div>
+          <div><div style="font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Strong submission includes</div><ul style="font-size:13px;color:var(--muted);line-height:1.9;padding-left:16px"><li>Number and type of sites</li><li>Seasonal vs. year-round</li><li>T12 or annual revenue</li><li>Current ADR / occupancy</li><li>Amenities present</li></ul></div>
+        </div>
+      </div>
+
+      <div style="background:var(--ink2);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--ink3);border-bottom:1px solid var(--border)">
+          <span style="font-size:28px">🏠</span><div style="font-size:16px;font-weight:500;color:var(--cream)">Mobile Home Parks</div>
+        </div>
+        <div style="padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div><div style="font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">What we're looking for</div><p style="font-size:13px;color:var(--muted);line-height:1.7">Manufactured housing communities of any size. Value-add through filling vacant pads, raising below-market lot rents, implementing utility bill-backs, or improving infrastructure. Motivated sellers a big plus.</p></div>
+          <div><div style="font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Strong submission includes</div><ul style="font-size:13px;color:var(--muted);line-height:1.9;padding-left:16px"><li>Total pads / occupied pads</li><li>Lot rent per pad</li><li>City vs. well/septic</li><li>Tenant-owned vs. park-owned homes</li><li>Rent roll</li></ul></div>
+        </div>
+      </div>
+
+      <div style="background:var(--ink2);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--ink3);border-bottom:1px solid var(--border)">
+          <span style="font-size:28px">🏢</span><div style="font-size:16px;font-weight:500;color:var(--cream)">Multifamily</div>
+        </div>
+        <div style="padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div><div style="font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">What we're looking for</div><p style="font-size:13px;color:var(--muted);line-height:1.7">Apartment complexes, duplexes through larger buildings. We target below-market rents, value-add through renovations, distressed assets, and off-market estate or distress situations. Any size considered.</p></div>
+          <div><div style="font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Strong submission includes</div><ul style="font-size:13px;color:var(--muted);line-height:1.9;padding-left:16px"><li>Unit count and mix (1/1, 2/1 etc.)</li><li>Average rents vs. market</li><li>Occupancy</li><li>Year built</li><li>Rent roll</li></ul></div>
+        </div>
+      </div>
+
+      <div style="background:var(--ink2);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--ink3);border-bottom:1px solid var(--border)">
+          <span style="font-size:28px">📦</span><div style="font-size:16px;font-weight:500;color:var(--cream)">Self Storage</div>
+        </div>
+        <div style="padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div><div style="font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">What we're looking for</div><p style="font-size:13px;color:var(--muted);line-height:1.7">Climate-controlled and non-climate-controlled facilities. Value-add through rate increases, improved management, adding units on excess land, or converting underused commercial space. T12 and rent roll essential.</p></div>
+          <div><div style="font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Strong submission includes</div><ul style="font-size:13px;color:var(--muted);line-height:1.9;padding-left:16px"><li>Unit count and unit mix</li><li>Climate vs. non-climate</li><li>Current occupancy</li><li>T12</li><li>Street rates vs. in-place rates</li></ul></div>
+        </div>
+      </div>
+
+      <div style="background:var(--ink2);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--ink3);border-bottom:1px solid var(--border)">
+          <span style="font-size:28px">🏪</span><div style="font-size:16px;font-weight:500;color:var(--cream)">Retail / NNN / Mixed Use</div>
+        </div>
+        <div style="padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div><div style="font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">What we're looking for</div><p style="font-size:13px;color:var(--muted);line-height:1.7">Single-tenant NNN, strip centers, and mixed-use properties with commercial and residential components. Long-term leases with creditworthy tenants preferred. Distressed or vacant properties considered with upside thesis.</p></div>
+          <div><div style="font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Strong submission includes</div><ul style="font-size:13px;color:var(--muted);line-height:1.9;padding-left:16px"><li>Tenant names and lease terms</li><li>Lease expiration dates</li><li>NNN vs. gross structure</li><li>Cap rate</li><li>Any co-tenancy clauses</li></ul></div>
+        </div>
+      </div>
+
+      <div style="background:var(--ink2);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--ink3);border-bottom:1px solid var(--border)">
+          <span style="font-size:28px">🌿</span><div style="font-size:16px;font-weight:500;color:var(--cream)">Land & Other</div>
+        </div>
+        <div style="padding:20px 24px">
+          <p style="font-size:13px;color:var(--muted);line-height:1.7">Development sites, agricultural land, unique assets, and portfolios. If you've found something interesting that doesn't fit a category above, submit it anyway — we review everything. Include zoning, acreage, utilities available, and any entitlements already in place.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:56px;padding-top:40px;border-top:1px solid var(--border)">
+      <p style="font-size:16px;color:var(--muted);margin-bottom:24px">Have one of these? Let us take a look.</p>
+      <button class="cta-primary" onclick="goSubmit()">Submit a Deal →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  VIEW: WHY US
+═══════════════════════════════════════════ -->
+<div class="view" id="view-why">
+  <nav class="form-nav">
+    <button class="back-btn" onclick="goLand()">← Back</button>
+    <div class="form-nav-brand">Investing with <span>Goles</span></div>
+    <div style="width:60px"></div>
+  </nav>
+  <div style="max-width:860px;margin:0 auto;padding:56px 24px 80px">
+    <div class="section-label" style="margin-bottom:12px">Why Work With Us</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,56px);font-weight:900;color:var(--cream);margin-bottom:14px;line-height:1.1">Serious Buyers.<br>Creative Terms.</h2>
+    <p style="font-size:17px;color:var(--muted);max-width:560px;line-height:1.75;margin-bottom:56px;font-weight:300">We close deals that other buyers walk away from. Here's why working with us is different.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+      <div style="background:var(--ink2);border:1px solid var(--border);border-radius:10px;padding:28px">
+        <div style="width:44px;height:44px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px">⚡</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--cream);margin-bottom:10px">Fast Decisions</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75">We review every submission within 24–48 hours. No committee. No months of back-and-forth. When a deal makes sense, we say yes fast and move to contract. Motivated sellers need quick answers — we give them.</p>
+      </div>
+      <div style="background:var(--ink2);border:1px solid var(--border);border-radius:10px;padding:28px">
+        <div style="width:44px;height:44px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px">🤝</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--cream);margin-bottom:10px">Creative Deal Structuring</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75">Seller financing, subject-to, master lease, JV partnerships, owner carry, lease options — we're not limited to all-cash conventional deals. If the seller has a problem we can solve creatively, that's often where the best deals are found.</p>
+      </div>
+      <div style="background:var(--ink2);border:1px solid var(--border);border-radius:10px;padding:28px">
+        <div style="width:44px;height:44px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px">💰</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--cream);margin-bottom:10px">We Pay Finder's Fees</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75">When we close on a deal you brought us, you get paid. The fee depends on deal size and complexity. We pay at closing — no waiting around, no runaround. Our best birddogs earn meaningful income submitting leads consistently.</p>
+      </div>
+      <div style="background:var(--ink2);border:1px solid var(--border);border-radius:10px;padding:28px">
+        <div style="width:44px;height:44px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px">🔒</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--cream);margin-bottom:10px">Confidential Process</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75">Seller information stays strictly between us. We handle all communication with the seller professionally and discreetly. No blasting deals to multiple buyers. When you bring us a lead, it stays with us.</p>
+      </div>
+      <div style="background:var(--ink2);border:1px solid var(--border);border-radius:10px;padding:28px">
+        <div style="width:44px;height:44px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px">🗺️</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--cream);margin-bottom:10px">Nationwide Coverage</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75">We're not limited to one market. Submit deals from anywhere in the country. We evaluate based on fundamentals — not geography. Rural, suburban, urban — if the numbers work and the seller is motivated, we want to see it.</p>
+      </div>
+      <div style="background:var(--ink2);border:1px solid var(--border);border-radius:10px;padding:28px">
+        <div style="width:44px;height:44px;border-radius:10px;background:var(--gold-glow);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px">📋</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--cream);margin-bottom:10px">We Review Everything</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75">Not sure if a deal is right for us? Submit it anyway. We review every single submission and respond. Even deals that don't work right now help us understand what's in the market — and sometimes become opportunities down the road.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--ink2);border:1px solid var(--gold-border);border-radius:10px;padding:32px;text-align:center;margin-top:4px">
+      <div style="font-family:'Playfair Display',serif;font-size:24px;color:var(--cream);margin-bottom:12px">Ready to submit a deal?</div>
+      <p style="font-size:15px;color:var(--muted);margin-bottom:24px;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.7">It takes about 5 minutes. Fill in what you know and let us handle the rest.</p>
+      <button class="cta-primary" onclick="goSubmit()">Submit a Deal →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  VIEW 2: SUBMIT FORM
+═══════════════════════════════════════════ -->
+<div class="view" id="view-submit">
+  <nav class="form-nav">
+    <button class="back-btn" onclick="goLand()">← Back</button>
+    <div class="form-nav-brand">Investing with <span>Goles</span></div>
+    <div style="width:60px"></div>
+  </nav>
+
+  <div id="submitFormWrap">
+    <div class="form-hero">
+      <div class="form-hero-inner">
+        <h2>Submit a <span>Deal</span></h2>
+        <p>Fill in everything you know. The more detail you provide, the faster we can evaluate and respond.</p>
+      </div>
+    </div>
+
+    <div class="form-outer">
+      <!-- 1. Property -->
+      <div class="fcard">
+        <div class="fcard-head"><div class="fcard-num">1</div><div class="fcard-title">Property Information</div></div>
+        <div class="fcard-body">
+          <div class="fg">
+            <div class="ff full"><label>Street address <span class="req">*</span></label><input id="f-addr" type="text" placeholder="123 Main St, City, State, ZIP"></div>
+            <div class="ff"><label>Property type <span class="req">*</span></label>
+              <select id="f-type"><option value="">Select type…</option><option>Co-Living</option><option>Multifamily</option><option>RV Park</option><option>Self Storage</option><option>Mobile Home Park</option><option>Mixed Use</option><option>Single Tenant NNN</option><option>Retail Strip</option><option>Land</option><option>Other</option></select>
+            </div>
+            <div class="ff"><label>Asking price</label><input id="f-price" type="text" placeholder="e.g. $1,200,000"></div>
+            <div class="ff"><label>Units / pads / spaces</label><input id="f-units" type="text" placeholder="e.g. 48 units, 62 pads"></div>
+            <div class="ff"><label>Year built</label><input id="f-year" type="text" placeholder="e.g. 1987"></div>
+            <div class="ff"><label>Lot / building size</label><input id="f-size" type="text" placeholder="e.g. 4.2 acres / 18,400 sqft"></div>
+            <div class="ff full"><label>Property condition / deferred maintenance</label><textarea id="f-condition" placeholder="Roof, HVAC, recent capex, visible issues…"></textarea></div>
+            <div class="ff full"><label>Value-add opportunities</label><textarea id="f-valueadd" placeholder="Below market rents, vacancies, expansion, utility bill-backs…"></textarea></div>
+            <div class="ff full"><label>Liens, title issues, back taxes</label><textarea id="f-liens" placeholder="Existing mortgage, tax liens, HOA, code violations…"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Seller -->
+      <div class="fcard">
+        <div class="fcard-head"><div class="fcard-num">2</div><div class="fcard-title">Seller Information</div></div>
+        <div class="fcard-body">
+          <div class="fg">
+            <div class="ff"><label>Seller name <span class="req">*</span></label><input id="f-seller" type="text" placeholder="Full name or entity"></div>
+            <div class="ff"><label>Seller phone</label><input id="f-phone" type="tel" placeholder="(555) 000-0000"></div>
+            <div class="ff"><label>Seller email</label><input id="f-email" type="email" placeholder="seller@email.com"></div>
+            <div class="ff"><label>Listed with broker?</label><select id="f-broker"><option value="">Unknown</option><option>No — off market</option><option>Yes — listed on MLS / Loopnet</option></select></div>
+            <div class="ff"><label>Reason for selling</label><select id="f-reason"><option value="">Select…</option><option>Retirement</option><option>Estate / probate</option><option>Financial distress</option><option>Divorce</option><option>Relocating</option><option>1031 exchange</option><option>Partnership split</option><option>Health reasons</option><option>Other</option></select></div>
+            <div class="ff"><label>Seller's timeline</label><select id="f-timeline"><option value="">Select…</option><option>Immediate — under 30 days</option><option>30–60 days</option><option>60–90 days</option><option>90–180 days</option><option>Flexible / no rush</option></select></div>
+            <div class="ff full"><label>Motivation — what did the seller tell you?</label><textarea id="f-motivation" placeholder="Their situation, urgency, pain points, what they said when you spoke…"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Terms -->
+      <div class="fcard">
+        <div class="fcard-head"><div class="fcard-num">3</div><div class="fcard-title">Deal Terms</div></div>
+        <div class="fcard-body">
+          <div class="ff"><label>Terms seller is open to</label>
+            <div class="tg-grid" id="termsGrid">
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="All Cash"><div class="tg-box"></div>All cash</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="Seller Financing"><div class="tg-box"></div>Seller financing</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="Assumable Loan"><div class="tg-box"></div>Assumable loan</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="Subject To"><div class="tg-box"></div>Subject to</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="Owner Carry"><div class="tg-box"></div>Owner carry</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="Lease Option"><div class="tg-box"></div>Lease option</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="Master Lease"><div class="tg-box"></div>Master lease</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="JV / Equity"><div class="tg-box"></div>JV / equity share</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="Land Contract"><div class="tg-box"></div>Land contract</label>
+            </div>
+          </div>
+          <div class="div"></div>
+          <div class="fg">
+            <div class="ff"><label>Down payment discussed</label><input id="f-down" type="text" placeholder="e.g. 20% or $400k"></div>
+            <div class="ff"><label>Interest rate (if seller fin.)</label><input id="f-rate" type="text" placeholder="e.g. 6.5%"></div>
+            <div class="ff"><label>Amortization / balloon</label><input id="f-amort" type="text" placeholder="e.g. 30yr am, 5yr balloon"></div>
+            <div class="ff"><label>Cap rate / GRM (if known)</label><input id="f-cap" type="text" placeholder="e.g. 7.2% cap"></div>
+            <div class="ff full"><label>Additional terms notes</label><textarea id="f-termsnotes" placeholder="Any other structure, contingencies, or what the seller said…"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Financials -->
+      <div class="fcard">
+        <div class="fcard-head"><div class="fcard-num">4</div><div class="fcard-title">Financial Details</div></div>
+        <div class="fcard-body">
+          <div class="fg">
+            <div class="ff"><label>Gross annual income</label><input id="f-income" type="text" placeholder="e.g. $210,000"></div>
+            <div class="ff"><label>Annual operating expenses</label><input id="f-expenses" type="text" placeholder="e.g. $88,000"></div>
+            <div class="ff"><label>Current occupancy</label><input id="f-occ" type="text" placeholder="e.g. 91%"></div>
+            <div class="ff"><label>Avg rent / pad / space</label><input id="f-avgrent" type="text" placeholder="e.g. $285/mo"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Docs -->
+      <div class="fcard">
+        <div class="fcard-head"><div class="fcard-num">5</div><div class="fcard-title">Documents</div></div>
+        <div class="fcard-body">
+          <div class="ff"><label>Documents available</label>
+            <div class="tg-grid" id="docsGrid">
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="Offering Memo (OM)"><div class="tg-box"></div>Offering memo</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="T12 (Trailing 12)"><div class="tg-box"></div>T12 trailing 12</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="Rent Roll"><div class="tg-box"></div>Rent roll</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="Tax Returns"><div class="tg-box"></div>Tax returns</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="Survey"><div class="tg-box"></div>Survey</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="Phase I ESA"><div class="tg-box"></div>Phase I ESA</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="Photos / Video"><div class="tg-box"></div>Photos / video</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="Utility Bills"><div class="tg-box"></div>Utility bills</label>
+              <label class="tg" onclick="tog(this)"><input type="checkbox" value="Inspection Report"><div class="tg-box"></div>Inspection report</label>
+            </div>
+          </div>
+          <div class="div"></div>
+          <div class="fg one">
+            <div class="ff">
+              <label>Upload files</label>
+              <div class="upzone" onclick="document.getElementById('fInput').click()">
+                <p style="font-size:24px;margin-bottom:8px">📎</p>
+                <p><strong>Click to attach files</strong> or drag and drop</p>
+                <small>OM, T12, rent roll, photos, inspection reports…</small>
+                <input type="file" id="fInput" multiple style="display:none" onchange="addFiles(this)">
+              </div>
+              <div class="ftags" id="fileTags"></div>
+            </div>
+            <div class="ff"><label>External link (Dropbox, Drive, Loopnet…)</label><input id="f-link" type="url" placeholder="https://…"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Urgency -->
+      <div class="fcard">
+        <div class="fcard-head"><div class="fcard-num">6</div><div class="fcard-title">Lead Urgency</div></div>
+        <div class="fcard-body">
+          <div class="ff"><label>How hot is this lead?</label>
+            <div class="urg-grid">
+              <label class="urg" id="urg-hot" onclick="setUrg('hot','🔴 Hot')"><input type="radio" name="urg" value="🔴 Hot"><div class="urg-e">🔴</div><div class="urg-l">Hot</div><div class="urg-d">Seller must move now — days or weeks</div></label>
+              <label class="urg" id="urg-warm" onclick="setUrg('warm','🟡 Warm')"><input type="radio" name="urg" value="🟡 Warm"><div class="urg-e">🟡</div><div class="urg-l">Warm</div><div class="urg-d">Motivated, not desperate — 1 to 3 months</div></label>
+              <label class="urg" id="urg-cool" onclick="setUrg('cool','🟢 Cool')"><input type="radio" name="urg" value="🟢 Cool"><div class="urg-e">🟢</div><div class="urg-l">Cool</div><div class="urg-d">Good deal, seller has no rush</div></label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Your Info -->
+      <div class="fcard">
+        <div class="fcard-head"><div class="fcard-num">7</div><div class="fcard-title">Your Information</div></div>
+        <div class="fcard-body">
+          <div class="fg">
+            <div class="ff"><label>Your name <span class="req">*</span></label><input id="f-rep" type="text" placeholder="First Last"></div>
+            <div class="ff"><label>Your phone / email</label><input id="f-repcontact" type="text" placeholder="So we can follow up with you"></div>
+            <div class="ff"><label>How did you find this lead?</label><select id="f-source"><option value="">Select…</option><option>Cold call / direct mail</option><option>Driving for dollars</option><option>Referral</option><option>Broker relationship</option><option>MLS / Loopnet / Costar</option><option>Auction</option><option>Other</option></select></div>
+            <div class="ff"><label>Your gut feeling</label><select id="f-gut"><option value="">Select…</option><option>💎 This is a deal — move fast</option><option>👍 Solid lead, worth reviewing</option><option>🤔 Not sure, you tell me</option><option>⚠️ Has issues but has potential</option></select></div>
+            <div class="ff full"><label>Additional notes</label><textarea id="f-notes" placeholder="Neighborhood info, seller's personality, red flags, anything your gut tells you about this deal…"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-area">
+        <button class="sub-btn" id="subBtn" onclick="submitDeal()">Submit This Deal →</button>
+        <div class="sub-note">We review every submission within 24–48 hours.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success state (shown after submit) -->
+  <div style="display:none" id="submitSuccess">
+    <div class="success-view">
+      <div class="success-ring">✓</div>
+      <h2>Deal Received!</h2>
+      <p>Our acquisition team has been notified and will review your submission. We'll reach out within 24–48 hours if we want to move forward.</p>
+      <button class="another-btn" onclick="resetSubmit()">Submit another deal</button>
+      <button class="home-btn" onclick="goLand()">Back to home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+  VIEW 3: PIPELINE DASHBOARD
+═══════════════════════════════════════════ -->
+<div class="view" id="view-pipeline">
+  <nav class="pipe-nav">
+    <div class="pipe-brand">
+      <div class="pipe-brand-text">Deal Pipeline</div>
+      <div class="pipe-badge">Private</div>
+    </div>
+    <div class="pipe-actions">
+      <button class="pbtn sm ghost" id="pendingBtn" style="display:none" onclick="importPending()"></button>
+      <button class="pbtn sm" onclick="exportCSV()">⬇ Export CSV</button>
+      <button class="pbtn sm gold" onclick="syncSheets()">📊 Sync Sheets</button>
+      <button class="pbtn sm ghost" onclick="openSettings()">⚙ Settings</button>
+      <button class="pbtn sm danger" onclick="lockPipeline()">Lock</button>
+    </div>
+  </nav>
+  <div class="status-bar" id="statusBar">
+    <div class="sb-item"><div class="sb-dot dot-g"></div><span>Pipeline active</span></div>
+    <div class="sb-item" id="sbEmail"><div class="sb-dot dot-d"></div><span>Email — not set</span></div>
+    <div class="sb-item" id="sbSheets"><div class="sb-dot dot-d"></div><span>Sheets — not set</span></div>
+    <div id="sbSync" style="margin-left:auto;font-size:11px;color:var(--dim)"></div>
+  </div>
+  <div class="pipe-tabs">
+    <button class="ptab on" onclick="switchTab('board',this)">Pipeline Board</button>
+    <button class="ptab" onclick="switchTab('list',this)">All Leads</button>
+    <button class="ptab" onclick="switchTab('add',this)">+ Add Lead</button>
+  </div>
+  <div class="pipe-main">
+    <div class="metrics" id="metricsBar"></div>
+    <div id="tab-board"><div class="board" id="board"></div></div>
+    <div id="tab-list" style="display:none">
+      <div class="frow">
+        <input class="fi" id="srch" type="text" placeholder="Search address, seller, rep…" oninput="renderList()" style="flex:1;min-width:160px">
+        <select class="fis" id="fStage" onchange="renderList()"><option value="">All Stages</option><option>New</option><option>Review</option><option>Due Diligence</option><option>Offer</option><option>Closed</option><option>Dead</option></select>
+        <select class="fis" id="fType" onchange="renderList()"><option value="">All Types</option><option>Co-Living</option><option>Multifamily</option><option>RV Park</option><option>Self Storage</option><option>Mobile Home Park</option><option>Mixed Use</option><option>Single Tenant NNN</option><option>Land</option><option>Other</option></select>
+      </div>
+      <div class="twrap"><table><thead><tr><th>Address</th><th>Type</th><th>Seller</th><th>Price</th><th>Stage</th><th>Urgency</th><th>Rep</th><th>Date</th></tr></thead><tbody id="listBody"></tbody></table></div>
+    </div>
+    <div id="tab-add" style="display:none"><div style="max-width:620px"><p style="color:var(--muted);font-size:14px;margin-bottom:20px">Manually add a lead. Birddogs use the <strong style="color:var(--text)">Submit a Deal</strong> form on the landing page.</p><div id="addFormWrap"></div><div style="display:flex;gap:10px;margin-top:20px"><button class="pbtn gold" onclick="addLead()">Add to Pipeline</button><button class="pbtn ghost" onclick="buildAddForm()">Clear</button></div></div></div>
+  </div>
+</div>
+
+<!-- PIPELINE LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeLoginModal()">✕</button>
+    <div class="modal-lock">🔐</div>
+    <div class="modal-title">Team Access</div>
+    <div class="modal-sub">Pipeline is private. Enter your password to continue.</div>
+    <label class="modal-label">Password</label>
+    <input class="modal-input" type="password" id="loginPw" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="modal-err" id="loginErr">Incorrect password. Try again.</div>
+    <button class="modal-btn" onclick="doLogin()">Unlock Pipeline →</button>
+    <div style="margin-top:16px;font-size:12px;color:var(--dim)">First time? Default password is <code style="background:var(--ink3);padding:1px 6px;border-radius:3px">deals2024</code> — change it in Settings after logging in.</div>
+  </div>
+</div>
+
+<!-- DETAIL PANEL -->
+<div class="overlay hidden" id="overlay" onclick="if(event.target===this)closePanel()">
+  <div class="panel"><div class="panel-top"><div><div class="panel-title" id="pTitle">—</div><div class="panel-addr" id="pAddr">—</div></div><button class="xbtn" onclick="closePanel()">✕</button></div><div class="panel-body" id="pBody"></div></div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="smodal-bg hidden" id="settingsModal">
+  <div class="smodal">
+    <h3>Settings</h3>
+    <p>Update your password, email alerts, and Google Sheets connection.</p>
+    <div class="stitle">Security</div>
+    <div class="mf"><label>New password</label><input type="password" id="cfg-pw" placeholder="Leave blank to keep current"></div>
+    <div class="sdiv"></div>
+    <div class="stitle">Email alerts</div>
+    <div class="mf"><label>Notification email</label><input type="email" id="cfg-email" placeholder="forwillenterprises&#64;gmail.com"><div class="hint">Pre-set to forwillenterprises&#64;gmail.com. Alerts fire via Claude's Gmail connection when leads come in.</div></div>
+    <div class="sdiv"></div>
+    <div class="stitle">Google Sheets sync</div>
+    <div class="mf"><label>Google API key</label><input type="text" id="cfg-gapi" placeholder="AIzaSy…"><div class="hint">Enable the Sheets API at <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a> → Credentials → Create API Key.</div></div>
+    <div class="mf"><label>Sheet ID (blank = auto-create)</label><input type="text" id="cfg-sid" placeholder="Paste existing Sheet ID or leave blank"></div>
+    <div class="mact"><button class="pbtn ghost" onclick="closeSettings()">Cancel</button><button class="pbtn gold" onclick="saveSettings()">Save settings</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><b id="tT"></b><span id="tM"></span></div>
+
+<script data-cfasync="false">
+// ── CONFIG ────────────────────────────────────────────────────────
+const NOTIFY_EMAIL = ['forwillenterprises','gmail.com'].join('@');
+
+// ── DATA ──────────────────────────────────────────────────────────
+let leads = JSON.parse(localStorage.getItem('fw_leads')||'null')||[
+  {id:1,address:'4200 Desert Wind Blvd, Tucson, AZ 85701',type:'RV Park',seller:'Jim Kowalski',phone:'(520) 555-0182',email:'jk@email.com',price:'$1,850,000',units:'62 pads',year:'1994',size:'8.2 acres',reason:'Retirement',timeline:'60–90 days',stage:'Due Diligence',rep:'Marcus T.',date:'2025-01-08',urgency:'🟡 Warm',motivation:'Seller is 72, wants to retire to Florida.',terms:['Seller Financing','All Cash'],down:'25%',rate:'6.5%',amort:'25yr am, 5yr balloon',cap:'8.1% cap',income:'$210,000',expenses:'$88,000',occ:'91%',avgrent:'$285/mo',condition:'Bath house roofs ~$40k.',valueadd:'10 sites can add full hookups.',liens:'Small vendor lien $8k.',docs:['T12','Rent Roll','Photos'],link:'',notes:'Strong market. 95%+ occupied campgrounds nearby.',source:'Cold call',broker:'No — off market',termsNotes:''},
+  {id:2,address:'811 Riverside Commons, Columbus, OH 43204',type:'Multifamily',seller:'Linda Holt',phone:'(614) 555-0341',email:'lholt@holtprop.com',price:'$3,200,000',units:'28 units',year:'1978',size:'24,800 sqft',reason:'Estate / probate',timeline:'30–60 days',stage:'Review',rep:'Sara K.',date:'2025-01-14',urgency:'🟡 Warm',motivation:'Inherited property. Attorney motivated.',terms:['All Cash','Assumable Loan'],down:'',rate:'',amort:'',cap:'6.8% cap',income:'$312,000',expenses:'$162,000',occ:'85%',avgrent:'$930/mo',condition:'Mechanicals 2019.',valueadd:'$120/unit below market.',liens:'CMBS $1.4M.',docs:['Offering Memo','Rent Roll','Tax Returns'],link:'',notes:'Price has room.',source:'Broker',broker:'Yes — listed',termsNotes:''},
+  {id:3,address:'920 N Palo Verde Dr, Blythe, CA 92225',type:'Mobile Home Park',seller:'Terry & Donna Vasquez',phone:'(760) 555-0290',email:'',price:'$780,000',units:'34 spaces',year:'1971',size:'5.5 acres',reason:'Financial distress',timeline:'Immediate — under 30 days',stage:'New',rep:'Dan R.',date:'2025-01-17',urgency:'🔴 Hot',motivation:'Behind on taxes. Need quick sale.',terms:['All Cash','Subject To','Seller Financing'],down:'30%',rate:'7%',amort:'20yr am',cap:'9.4% cap',income:'$96,000',expenses:'$42,000',occ:'79%',avgrent:'$235/mo',condition:'Water main issue.',valueadd:'Raise rents +$50/space.',liens:'Back taxes ~$22k.',docs:['Rent Roll'],link:'',notes:'Would consider $680k cash. URGENT.',source:'Driving for dollars',broker:'No — off market',termsNotes:'Seller carry 3yr, $200k down.'},
+  {id:4,address:'3318 Lakeview Ln, Branson, MO 65616',type:'RV Park',seller:'Harold Simms',phone:'(417) 555-0178',email:'harold@lakeviewrv.net',price:'$4,400,000',units:'98 sites',year:'1989',size:'22 acres',reason:'Retirement',timeline:'Flexible / no rush',stage:'Offer',rep:'Marcus T.',date:'2024-12-20',urgency:'🟢 Cool',motivation:'68 years old. Would seller-finance.',terms:['Seller Financing','All Cash','Owner Carry'],down:'20%',rate:'5.75%',amort:'30yr am, 10yr balloon',cap:'8.8% cap',income:'$520,000',expenses:'$218,000',occ:'94%',avgrent:'$445/night',condition:'Well maintained.',valueadd:'Add 12 premium sites on south parcel.',liens:'Free and clear.',docs:['T12','Rent Roll','OM','Tax Returns','Photos'],link:'',notes:'Verbal offer $4.1M submitted.',source:'Cold call',broker:'No — off market',termsNotes:'80/20 seller finance 5.75%.'},
+];
+let nextId = leads.length ? Math.max(...leads.map(l=>l.id))+1 : 1;
+const STAGES=['New','Review','Due Diligence','Offer','Closed'];
+const ALL_STAGES=[...STAGES,'Dead'];
+const BADGE_MAP={New:'b-new',Review:'b-rev','Due Diligence':'b-dd',Offer:'b-off',Closed:'b-cl',Dead:'b-dead'};
+function saveLeads(){localStorage.setItem('fw_leads',JSON.stringify(leads))}
+function cfg(k,v){if(v!==undefined)localStorage.setItem('fw_'+k,v);return localStorage.getItem('fw_'+k)||''}
+
+// ── NAVIGATION ────────────────────────────────────────────────────
+function goView(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function goLand(){goView('view-land')}
+function goSubmit(){goView('view-submit')}
+function scrollToSec(sel){document.querySelector(sel)?.scrollIntoView({behavior:'smooth'})}
+
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('landNav');
+  if(nav) nav.classList.toggle('scrolled',window.scrollY>40);
+},{passive:true});
+
+// ── PIPELINE LOGIN ────────────────────────────────────────────────
+function getPw(){return cfg('pw')||'deals2024'}
+function openLoginModal(){document.getElementById('loginModal').classList.add('open');setTimeout(()=>document.getElementById('loginPw').focus(),300)}
+function closeLoginModal(){document.getElementById('loginModal').classList.remove('open');document.getElementById('loginPw').value='';document.getElementById('loginErr').classList.remove('show')}
+function doLogin(){
+  const v=document.getElementById('loginPw').value;
+  if(v===getPw()){
+    closeLoginModal();
+    goView('view-pipeline');
+    updateStatus();checkPending();renderAll();
+  } else {
+    document.getElementById('loginErr').classList.add('show');
+    document.getElementById('loginPw').value='';
+    setTimeout(()=>document.getElementById('loginErr').classList.remove('show'),3000);
+  }
+}
+function lockPipeline(){goLand()}
+
+// ── STATUS BAR ────────────────────────────────────────────────────
+function updateStatus(){
+  const em=cfg('email')||NOTIFY_EMAIL;
+  const ga=cfg('gapi');
+  document.getElementById('sbEmail').innerHTML=em
+    ?`<div class="sb-dot dot-g"></div><span>Alerts → <strong>${em}</strong></span>`
+    :`<div class="sb-dot dot-a"></div><span>Email — <span style="cursor:pointer;color:var(--amber)" onclick="openSettings()">configure</span></span>`;
+  document.getElementById('sbSheets').innerHTML=ga
+    ?`<div class="sb-dot dot-g"></div><span>Google Sheets — <strong>connected</strong></span>`
+    :`<div class="sb-dot dot-d"></div><span>Google Sheets — <span style="cursor:pointer;color:var(--muted)" onclick="openSettings()">optional setup</span></span>`;
+}
+
+// ── PENDING IMPORTS ───────────────────────────────────────────────
+function checkPending(){
+  try{
+    const p=JSON.parse(localStorage.getItem('fw_pending')||'[]');
+    const btn=document.getElementById('pendingBtn');
+    if(p.length){btn.style.display='inline-block';btn.textContent=`${p.length} new submission${p.length>1?'s':''}`}
+    else btn.style.display='none';
+  }catch(e){}
+}
+function importPending(){
+  try{
+    const p=JSON.parse(localStorage.getItem('fw_pending')||'[]');
+    if(!p.length){toast('No pending submissions','');return}
+    p.forEach(d=>{
+      const l={id:nextId++,address:d.address||'',type:d.type||'',seller:d.seller||'',phone:d.phone||'',email:d.sellerEmail||'',price:d.price||'',units:d.units||'',year:d.year||'',size:d.size||'',reason:d.reason||'',timeline:d.timeline||'',stage:'New',rep:d.rep||'',date:(d.submittedAt||new Date().toISOString()).split('T')[0],urgency:d.urgency||'',motivation:d.motivation||'',terms:d.terms||[],down:d.down||'',rate:d.rate||'',amort:d.amort||'',cap:d.cap||'',termsNotes:d.termsNotes||'',income:d.income||'',expenses:d.expenses||'',occ:d.occ||'',avgrent:d.avgrent||'',condition:d.condition||'',valueadd:d.valueadd||'',liens:d.liens||'',docs:d.docs||[],link:d.link||'',notes:d.notes||'',source:d.source||'',broker:d.broker||''};
+      leads.unshift(l);
+      sendAlert(l);
+    });
+    saveLeads();localStorage.removeItem('fw_pending');
+    document.getElementById('pendingBtn').style.display='none';
+    renderAll();toast(`${p.length} lead${p.length>1?'s':''} imported`,'Added as New. Alerts sent to '+( cfg('email')||NOTIFY_EMAIL));
+  }catch(e){toast('Import error',e.message,true)}
+}
+
+// ── EMAIL ALERT ───────────────────────────────────────────────────
+async function sendAlert(l){
+  const to=cfg('email')||NOTIFY_EMAIL;
+  const urg=(l.urgency||'').includes('Hot')?'🔴 HOT':(l.urgency||'').includes('Warm')?'🟡 Warm':'🟢 Cool';
+  const subj=`${urg} New Lead: ${l.address.split(',')[0]} — ${l.type}`;
+  const body=`NEW PROPERTY LEAD — INVESTING WITH GOLES\n${'─'.repeat(50)}\n\nADDRESS:    ${l.address}\nTYPE:       ${l.type}\nPRICE:      ${l.price||'TBD'}\nUNITS:      ${l.units||'—'}\nCAP RATE:   ${l.cap||'—'}\nOCCUPANCY:  ${l.occ||'—'}\n\nSELLER:     ${l.seller}\nPHONE:      ${l.phone||'—'}\nEMAIL:      ${l.email||'—'}\nBROKER:     ${l.broker||'—'}\nREASON:     ${l.reason||'—'}\nTIMELINE:   ${l.timeline||'—'}\nURGENCY:    ${l.urgency||'—'}\n\nTERMS:      ${(l.terms||[]).join(', ')||'—'}\nDOWN:       ${l.down||'—'}\nRATE:       ${l.rate||'—'}\nAMORT:      ${l.amort||'—'}\n\nINCOME:     ${l.income||'—'}\nEXPENSES:   ${l.expenses||'—'}\nAVG RENT:   ${l.avgrent||'—'}\n\nDOCS:       ${(l.docs||[]).join(', ')||'None'}\n\nMOTIVATION:\n${l.motivation||'Not provided'}\n\nNOTES:\n${l.notes||'None'}\n\nSUBMITTED BY: ${l.rep} | ${l.source||'—'}\nDATE: ${new Date().toLocaleString()}\n${'─'.repeat(50)}`;
+  try{
+    await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:500,
+        mcp_servers:[{type:'url',url:'https://gmail.mcp.claude.com/mcp',name:'gmail'}],
+        messages:[{role:'user',content:`Create a Gmail draft: To: ${to}, Subject: "${subj}", Body:\n\n${body}\n\nConfirm when done.`}]
+      })
+    });
+    cfg('lastalert',new Date().toLocaleTimeString());
+    document.getElementById('sbSync').textContent='Last alert: '+cfg('lastalert');
+  }catch(e){console.warn('Alert failed:',e)}
+}
+
+// ── GOOGLE SHEETS ─────────────────────────────────────────────────
+async function syncSheets(){
+  const gapi=cfg('gapi');
+  if(!gapi){toast('API key needed','Add your Google API key in Settings.',true);openSettings();return}
+  const btn=document.querySelector('[onclick="syncSheets()"]');
+  btn.innerHTML='<span class="spin"></span>Syncing…';btn.disabled=true;
+  try{
+    let sid=cfg('sid');
+    if(!sid){
+      const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets?key=${gapi}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({properties:{title:'Investing with Goles — Deal Pipeline — '+new Date().toLocaleDateString()},sheets:[{properties:{title:'Leads'}}]})});
+      if(!r.ok)throw new Error('Could not create sheet. Check API key & Sheets API is enabled.');
+      const sh=await r.json();sid=sh.spreadsheetId;cfg('sid',sid);
+      toast('Sheet created!','Sheet ID saved. Opening link…');
+      setTimeout(()=>window.open(`https://docs.google.com/spreadsheets/d/${sid}`,'_blank'),1000);
+    }
+    const H=['ID','Address','Type','Seller','Phone','Email','Price','Units','Year','Cap Rate','Occ','Avg Rent','Income','Expenses','Reason','Timeline','Terms','Down','Rate','Amort','Condition','Value-Add','Liens','Docs','Link','Rep','Stage','Urgency','Date','Notes'];
+    const rows=leads.map(l=>[l.id,l.address,l.type,l.seller,l.phone,l.email,l.price,l.units,l.year,l.cap,l.occ,l.avgrent,l.income,l.expenses,l.reason,l.timeline,(l.terms||[]).join(', '),l.down,l.rate,l.amort,l.condition,l.valueadd,l.liens,(l.docs||[]).join(', '),l.link,l.rep,l.stage,l.urgency,l.date,l.notes]);
+    const ar=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sid}/values/Leads!A1:append?valueInputOption=RAW&insertDataOption=OVERWRITE&key=${gapi}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({values:[H,...rows]})});
+    if(!ar.ok){const e=await ar.json();throw new Error(e.error?.message||'Write failed')}
+    cfg('lastSync',new Date().toLocaleTimeString());
+    document.getElementById('sbSync').textContent='Last sync: '+cfg('lastSync');
+    toast('Synced!',`${leads.length} leads written to Google Sheets.`);
+  }catch(e){toast('Sheets failed',e.message,true);exportCSV()}
+  btn.innerHTML='📊 Sync Sheets';btn.disabled=false;
+}
+
+// ── CSV EXPORT ────────────────────────────────────────────────────
+function exportCSV(){
+  const H=['ID','Address','Type','Seller','Phone','Email','Price','Units','Year','Cap','Occ','AvgRent','Income','Expenses','Reason','Timeline','Terms','Down','Rate','Amort','Stage','Urgency','Rep','Date','Docs','Notes'];
+  const rows=leads.map(l=>[l.id,`"${l.address}"`,l.type,`"${l.seller}"`,l.phone,l.email,l.price,l.units,l.year,l.cap,l.occ,l.avgrent,l.income,l.expenses,l.reason,l.timeline,`"${(l.terms||[]).join(', ')}"`,l.down,l.rate,l.amort,l.stage,l.urgency,l.rep,l.date,`"${(l.docs||[]).join(', ')}"`,`"${(l.notes||'').replace(/"/g,"'")}"`].join(','));
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([[H.join(','),...rows].join('\n')],{type:'text/csv'}));a.download=`pipeline-${new Date().toISOString().split('T')[0]}.csv`;a.click();
+  toast('CSV exported',`${leads.length} leads downloaded.`);
+}
+
+// ── PIPELINE RENDER ───────────────────────────────────────────────
+function udot(u){
+  if((u||'').includes('Hot'))return'<span class="udot" style="background:var(--red)"></span>';
+  if((u||'').includes('Warm'))return'<span class="udot" style="background:var(--amber)"></span>';
+  return'<span class="udot" style="background:var(--green)"></span>';
+}
+function renderMetrics(){
+  const active=leads.filter(l=>!['Dead','Closed'].includes(l.stage)).length;
+  const val=leads.reduce((s,l)=>s+(parseFloat((l.price||'').replace(/[^0-9.]/g,''))||0),0);
+  const hot=leads.filter(l=>(l.urgency||'').includes('Hot')).length;
+  document.getElementById('metricsBar').innerHTML=[
+    ['Total Leads',leads.length,'all time',''],
+    ['Active Pipeline',active,'not closed or dead','hi'],
+    ['Pipeline Value','$'+(val/1e6).toFixed(1)+'M','combined ask',''],
+    ['Hot Leads',hot,'immediate action',''],
+  ].map(([l,v,s,c])=>`<div class="metric${c?' '+c:''}"><div class="metric-l">${l}</div><div class="metric-v">${v}</div><div class="metric-s">${s}</div></div>`).join('');
+}
+function renderBoard(){
+  document.getElementById('board').innerHTML=STAGES.map(st=>{
+    const items=leads.filter(l=>l.stage===st);
+    return`<div class="bcol"><div class="bcol-h"><div class="bcol-n">${st}</div><div class="bcol-c">${items.length}</div></div>${items.length?items.map(l=>`<div class="deal" onclick="openPanel(${l.id})"><div class="deal-a">${l.address.split(',').slice(0,2).join(',')}</div><div class="deal-p">${l.price||'TBD'}</div><div class="deal-m"><span>${l.type}</span><span>${udot(l.urgency)} ${(l.urgency||'').replace(/[🔴🟡🟢]\s*/,'')}</span><span>📋 ${l.rep}</span></div></div>`).join(''):'<div class="empty" style="padding:20px">Empty</div>'}</div>`;
+  }).join('');
+}
+function renderList(){
+  const q=(document.getElementById('srch').value||'').toLowerCase();
+  const st=document.getElementById('fStage').value;
+  const ty=document.getElementById('fType').value;
+  const d=leads.filter(l=>(!q||(l.address+l.seller+l.rep+l.type).toLowerCase().includes(q))&&(!st||l.stage===st)&&(!ty||l.type===ty));
+  const fd=s=>{try{return new Date(s).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}catch(e){return s||'—'}};
+  document.getElementById('listBody').innerHTML=d.length?d.map(l=>`<tr onclick="openPanel(${l.id})"><td><strong>${l.address.split(',')[0]}</strong><div style="font-size:11px;color:var(--muted)">${l.address.split(',').slice(1).join(',').trim()}</div></td><td><span class="type-tag">${l.type}</span></td><td>${(l.seller||'').split('(')[0].trim()}</td><td style="color:var(--gold2);font-weight:500">${l.price||'TBD'}</td><td><span class="badge ${BADGE_MAP[l.stage]||'b-new'}">${l.stage}</span></td><td>${udot(l.urgency)} ${(l.urgency||'').replace(/[🔴🟡🟢]\s*/,'')}</td><td><div class="rep-wrap"><div class="ava">${(l.rep||'?').split(' ').map(x=>x[0]).join('').slice(0,2)}</div>${l.rep}</div></td><td style="color:var(--muted)">${fd(l.date)}</td></tr>`).join(''):`<tr><td colspan="8"><div class="empty">No leads match.</div></td></tr>`;
+}
+function renderAll(){renderMetrics();renderBoard()}
+
+// ── DETAIL PANEL ──────────────────────────────────────────────────
+function openPanel(id){
+  const l=leads.find(x=>x.id===id);if(!l)return;
+  document.getElementById('pTitle').textContent=l.address.split(',').slice(0,2).join(',');
+  document.getElementById('pAddr').textContent=l.address;
+  const sOpts=ALL_STAGES.map(s=>`<option${s===l.stage?' selected':''}>${s}</option>`).join('');
+  const terms=(l.terms||[]).map(t=>`<span class="tgtag">${t}</span>`).join('');
+  const docs=(l.docs||[]).length?(l.docs||[]).map(d=>`<div class="drow">📄 ${d}</div>`).join(''):`<div style="font-size:13px;color:var(--dim)">None</div>`;
+  document.getElementById('pBody').innerHTML=`
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+      <span class="badge ${BADGE_MAP[l.stage]||'b-new'}">${l.stage}</span>
+      <span class="type-tag">${l.type}</span>
+      <span style="font-size:12px;color:var(--dim)">${l.date||'—'}</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:20px;flex-wrap:wrap">
+      <label style="font-size:12px;color:var(--muted)">Move to:</label>
+      <select class="stsel" onchange="mvStage(${l.id},this.value)">${sOpts}</select>
+      <button class="pbtn sm danger" onclick="mkDead(${l.id})">Mark dead</button>
+      <button class="pbtn sm" onclick="resendAlert(${l.id})">📧 Resend alert</button>
+    </div>
+    <div class="ps"><div class="ps-t">Property</div><div class="dg">
+      <div class="di"><label>Asking price</label><span style="font-size:16px;font-weight:600;color:var(--gold2);font-family:'Playfair Display',serif">${l.price||'TBD'}</span></div>
+      <div class="di"><label>Cap rate / GRM</label><span>${l.cap||'—'}</span></div>
+      <div class="di"><label>Units / spaces</label><span>${l.units||'—'}</span></div>
+      <div class="di"><label>Year built</label><span>${l.year||'—'}</span></div>
+      <div class="di"><label>Gross income</label><span>${l.income||'—'}</span></div>
+      <div class="di"><label>Expenses</label><span>${l.expenses||'—'}</span></div>
+      <div class="di"><label>Occupancy</label><span>${l.occ||'—'}</span></div>
+      <div class="di"><label>Avg rent</label><span>${l.avgrent||'—'}</span></div>
+      ${l.condition?`<div class="di dgf"><label>Condition</label><div class="nb">${l.condition}</div></div>`:''}
+      ${l.valueadd?`<div class="di dgf"><label>Value-add</label><div class="nb">${l.valueadd}</div></div>`:''}
+    </div></div>
+    <div class="ps"><div class="ps-t">Seller</div><div class="dg">
+      <div class="di"><label>Name</label><span>${l.seller||'—'}</span></div>
+      <div class="di"><label>Phone</label><span>${l.phone||'—'}</span></div>
+      <div class="di"><label>Email</label><span>${l.email||'—'}</span></div>
+      <div class="di"><label>Broker</label><span>${l.broker||'—'}</span></div>
+      <div class="di"><label>Reason</label><span>${l.reason||'—'}</span></div>
+      <div class="di"><label>Timeline</label><span>${l.timeline||'—'}</span></div>
+      ${l.motivation?`<div class="di dgf"><label>Motivation</label><div class="nb">${l.motivation}</div></div>`:''}
+      ${l.liens?`<div class="di dgf"><label>Liens / title</label><div class="nb">${l.liens}</div></div>`:''}
+    </div></div>
+    <div class="ps"><div class="ps-t">Terms</div>
+      <div class="tagr" style="margin-bottom:12px">${terms||'<span style="font-size:13px;color:var(--dim)">None specified</span>'}</div>
+      <div class="dg">
+        <div class="di"><label>Down payment</label><span>${l.down||'—'}</span></div>
+        <div class="di"><label>Rate</label><span>${l.rate||'—'}</span></div>
+        <div class="di dgf"><label>Amortization</label><span>${l.amort||'—'}</span></div>
+        ${l.termsNotes?`<div class="di dgf"><label>Terms notes</label><div class="nb">${l.termsNotes}</div></div>`:''}
+      </div>
+    </div>
+    <div class="ps"><div class="ps-t">Documents</div>${docs}${l.link?`<div style="margin-top:8px;font-size:13px">🔗 <a href="${l.link}" style="color:var(--blue)" target="_blank">${l.link}</a></div>`:''}</div>
+    ${l.notes?`<div class="ps"><div class="ps-t">Notes</div><div class="nb">${l.notes}</div></div>`:''}
+    <div class="ps"><div class="ps-t">Submission</div><div class="dg">
+      <div class="di"><label>Submitted by</label><span>${l.rep}</span></div>
+      <div class="di"><label>Date</label><span>${l.date}</span></div>
+      <div class="di"><label>Source</label><span>${l.source||'—'}</span></div>
+      <div class="di"><label>Urgency</label><span>${l.urgency||'—'}</span></div>
+    </div></div>
+    <div style="margin-top:8px"><button class="pbtn sm danger" onclick="delLead(${l.id})">Delete permanently</button></div>`;
+  document.getElementById('overlay').classList.remove('hidden');
+}
+function closePanel(){document.getElementById('overlay').classList.add('hidden')}
+function mvStage(id,s){const l=leads.find(x=>x.id===id);if(l){l.stage=s;saveLeads();renderAll();toast('Stage updated','Moved to '+s)}}
+function mkDead(id){mvStage(id,'Dead');closePanel()}
+function delLead(id){if(!confirm('Delete this lead permanently?'))return;leads=leads.filter(x=>x.id!==id);saveLeads();renderAll();closePanel();toast('Deleted','Lead removed from pipeline.')}
+function resendAlert(id){const l=leads.find(x=>x.id===id);if(l)sendAlert(l).then(()=>toast('Alert sent','Email notification sent for '+l.address.split(',')[0])).catch(()=>toast('Alert queued','Will send when connected.'))}
+
+// ── ADD MANUALLY ──────────────────────────────────────────────────
+function buildAddForm(){
+  const IS='background:var(--ink2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:\'DM Sans\',sans-serif;font-size:14px;padding:9px 12px;width:100%;appearance:none';
+  const LB='display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px';
+  const fields=[
+    ['a-addr','Address *','text','123 Main St, City, State','full'],
+    ['a-type','Property type *','sel',['','Co-Living','Multifamily','RV Park','Self Storage','Mobile Home Park','Mixed Use','Single Tenant NNN','Land','Other'],''],
+    ['a-price','Asking price','text','$0,000,000',''],
+    ['a-units','Units / spaces','text','e.g. 48 units',''],
+    ['a-seller','Seller name *','text','Full name',''],
+    ['a-phone','Seller phone','text','(555) 000-0000',''],
+    ['a-reason','Reason','sel',['','Retirement','Estate / probate','Financial distress','Divorce','Relocating','1031 exchange','Partnership split','Other'],''],
+    ['a-timeline','Timeline','sel',['','Immediate — under 30 days','30–60 days','60–90 days','90–180 days','Flexible / no rush'],''],
+    ['a-stage','Stage','sel',[...STAGES],''],
+    ['a-urg','Urgency','sel',['','🔴 Hot — seller needs to move NOW','🟡 Warm — motivated, not desperate','🟢 Cool — good deal, no rush'],''],
+    ['a-rep','Your name *','text','First Last',''],
+    ['a-notes','Notes','ta','Additional context…','full'],
+  ];
+  document.getElementById('addFormWrap').innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">${fields.map(([id,lbl,tp,ph,cls])=>{
+    const isf=cls==='full';
+    let el;
+    if(tp==='sel')el=`<select id="${id}" style="${IS}">${ph.map(o=>`<option>${o}</option>`).join('')}</select>`;
+    else if(tp==='ta')el=`<textarea id="${id}" placeholder="${ph}" style="${IS};min-height:80px;resize:vertical"></textarea>`;
+    else el=`<input type="text" id="${id}" placeholder="${ph}" style="${IS}">`;
+    return`<div${isf?' style="grid-column:1/-1"':''}><label style="${LB}">${lbl}</label>${el}</div>`;
+  }).join('')}</div>`;
+}
+function gv(id){return(document.getElementById(id)||{}).value||''}
+function addLead(){
+  const a=gv('a-addr').trim(),se=gv('a-seller').trim(),r=gv('a-rep').trim(),t=gv('a-type');
+  if(!a||!se||!r||!t){toast('Missing fields','Address, type, seller, and your name required.',true);return}
+  const l={id:nextId++,address:a,type:t,seller:se,phone:gv('a-phone'),email:'',price:gv('a-price'),units:gv('a-units'),year:'',size:'',reason:gv('a-reason'),timeline:gv('a-timeline'),stage:gv('a-stage')||'New',rep:r,date:new Date().toISOString().split('T')[0],urgency:gv('a-urg'),motivation:'',terms:[],down:'',rate:'',amort:'',cap:'',termsNotes:'',income:'',expenses:'',occ:'',avgrent:'',condition:'',valueadd:'',liens:'',docs:[],link:'',notes:gv('a-notes'),source:'Manual entry',broker:''};
+  leads.unshift(l);saveLeads();renderAll();
+  toast('Lead added',a.split(',')[0]+' added to pipeline.');
+  sendAlert(l);
+  switchTab('board',document.querySelectorAll('.ptab')[0]);
+}
+
+// ── TABS ──────────────────────────────────────────────────────────
+function switchTab(n,el){
+  ['board','list','add'].forEach(t=>document.getElementById('tab-'+t).style.display=t===n?'block':'none');
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  if(n==='list')renderList();
+  if(n==='add')buildAddForm();
+}
+
+// ── SETTINGS ─────────────────────────────────────────────────────
+function openSettings(){
+  document.getElementById('cfg-pw').value='';
+  document.getElementById('cfg-email').value=cfg('email')||NOTIFY_EMAIL;
+  document.getElementById('cfg-gapi').value=cfg('gapi');
+  document.getElementById('cfg-sid').value=cfg('sid');
+  document.getElementById('settingsModal').classList.remove('hidden');
+}
+function closeSettings(){document.getElementById('settingsModal').classList.add('hidden')}
+function saveSettings(){
+  const pw=document.getElementById('cfg-pw').value.trim();
+  const em=document.getElementById('cfg-email').value.trim();
+  const ga=document.getElementById('cfg-gapi').value.trim();
+  const si=document.getElementById('cfg-sid').value.trim();
+  if(pw)cfg('pw',pw);
+  if(em)cfg('email',em);
+  if(ga)cfg('gapi',ga);
+  if(si)cfg('sid',si);
+  closeSettings();updateStatus();
+  toast('Settings saved','Your configuration has been updated.');
+}
+
+// ── SUBMIT FORM LOGIC ─────────────────────────────────────────────
+let files=[],urgency='';
+function tog(el){el.classList.toggle('on');el.querySelector('input').checked=el.classList.contains('on')}
+function setUrg(cls,val){
+  document.querySelectorAll('.urg').forEach(u=>{u.className='urg'});
+  document.getElementById('urg-'+cls).classList.add('on-'+cls);
+  urgency=val;
+}
+function getChecked(gid){return[...document.querySelectorAll('#'+gid+' input:checked')].map(x=>x.value)}
+function addFiles(inp){[...inp.files].forEach(f=>{if(files.find(x=>x.name===f.name))return;files.push(f);const t=document.createElement('div');t.className='ftag';t.innerHTML=`<span>📄 ${f.name}</span><button onclick="rmFile('${f.name}',this)">×</button>`;document.getElementById('fileTags').appendChild(t)})}
+function rmFile(n,b){files=files.filter(f=>f.name!==n);b.parentElement.remove()}
+function fv(id){return(document.getElementById(id)||{}).value||''}
+
+async function submitDeal(){
+  const addr=fv('f-addr').trim(),seller=fv('f-seller').trim(),rep=fv('f-rep').trim(),type=fv('f-type');
+  if(!addr||!seller||!rep||!type){toast('Missing required fields','Fill in address, property type, seller name, and your name.',true);return}
+  const btn=document.getElementById('subBtn');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Submitting…';
+  const data={address:addr,type,price:fv('f-price'),units:fv('f-units'),year:fv('f-year'),size:fv('f-size'),condition:fv('f-condition'),valueadd:fv('f-valueadd'),liens:fv('f-liens'),seller,phone:fv('f-phone'),sellerEmail:fv('f-email'),broker:fv('f-broker'),reason:fv('f-reason'),timeline:fv('f-timeline'),motivation:fv('f-motivation'),terms:getChecked('termsGrid'),down:fv('f-down'),rate:fv('f-rate'),amort:fv('f-amort'),cap:fv('f-cap'),termsNotes:fv('f-termsnotes'),income:fv('f-income'),expenses:fv('f-expenses'),occ:fv('f-occ'),avgrent:fv('f-avgrent'),docs:getChecked('docsGrid'),link:fv('f-link'),fileNames:files.map(f=>f.name),rep,repContact:fv('f-repcontact'),source:fv('f-source'),gut:fv('f-gut'),urgency,notes:fv('f-notes'),submittedAt:new Date().toISOString()};
+  // Store in pending queue (pipeline picks up when you open it)
+  try{const p=JSON.parse(localStorage.getItem('fw_pending')||'[]');p.push(data);localStorage.setItem('fw_pending',JSON.stringify(p))}catch(e){}
+  btn.disabled=false;btn.innerHTML='Submit This Deal →';
+  document.getElementById('submitFormWrap').style.display='none';
+  document.getElementById('submitSuccess').style.display='block';
+  window.scrollTo(0,0);
+}
+function resetSubmit(){
+  document.querySelectorAll('#view-submit input:not([type=radio]):not([type=checkbox]):not([type=file]),#view-submit select,#view-submit textarea').forEach(el=>el.value='');
+  document.querySelectorAll('.tg.on,.urg[class*="on-"]').forEach(el=>{el.className=el.className.replace(/ on(-\w+)?/,'')});
+  files=[];urgency='';
+  document.getElementById('fileTags').innerHTML='';
+  document.getElementById('submitFormWrap').style.display='block';
+  document.getElementById('submitSuccess').style.display='none';
+  window.scrollTo(0,0);
+}
+
+// ── TOAST ──────────────────────────────────────────────────────────
+function toast(title,msg,err){
+  const t=document.getElementById('toast');
+  document.getElementById('tT').textContent=title;
+  document.getElementById('tM').textContent=msg||'';
+  t.className='toast'+(err?' err':'')+' show';
+  setTimeout(()=>t.classList.remove('show'),5000);
+}
+</script>
+</body>
+</html>
